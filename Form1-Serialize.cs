@@ -41,6 +41,7 @@ namespace App
             var fields = this.GetType().GetFields();
             foreach(var f in fields)
             {
+                if (f.Name == "TYPE_LIST__") continue;
                 if (typeList.Keys.Contains(f.Name))
                 {
                     var typeInfo = typeList[f.Name].Split(':');                    
@@ -51,7 +52,6 @@ namespace App
                 {
                     f.SetValue(this, info.GetValue(f.Name, f.FieldType));
                 }
-                if (f.Name == "TYPE_LIST__") continue;
             }
         }
 
