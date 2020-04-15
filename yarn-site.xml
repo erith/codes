@@ -1,0 +1,34 @@
+<configuration>
+    <!-- YARN master hostname -->
+    <property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>ubuntu0</value>
+    </property>
+    <!-- YARN settings for lower and upper resource limits -->
+    <property>
+        <name>yarn.scheduler.minimum-allocation-mb</name>
+        <value>512</value>
+    </property>
+    <property>
+        <name>yarn.scheduler.maximum-allocation-mb</name>
+        <value>4096</value>
+    </property>
+    <property>
+        <name>yarn.scheduler.minimum-allocation-vcores</name>
+        <value>1</value>
+    </property>
+    <property>
+        <name>yarn.scheduler.maximum-allocation-vcores</name>
+        <value>2</value>
+    </property>
+    <!-- Log aggregation settings -->
+    <property>
+        <name>yarn.log-aggregation-enable</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>yarn.log-aggregation.retain-seconds</name>
+        <value>86400</value>
+        <description>How long to keep aggregation logs. Used by History Server.</description>
+    </property>
+</configuration>
