@@ -40,6 +40,9 @@
 #04 Magic명령어 파트
 [악튜러스님 강의 #04(magic명령어)](https://www.youtube.com/watch?v=x-XmjsMu8SU&list=PL73qGQ0nG_q3qI1KNAdGb2ILhm8UXb4CH&index=6)
 
+참고서적 : Python Data Science Handbook by Jake VanderPlas O'REILLY
+
+
 실행시간이나, 메모리소요량등을 확인해볼 수 있다.<br />
 혹은 아래 명령어를 통해 SQLite를 바로 사용해볼 수 있다..<br />
 
