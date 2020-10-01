@@ -13,7 +13,7 @@ https://docs.google.com/presentation/d/1wfqrYz1UBMHfKWK1OSVnbtxwVviNCUyei2Ygz0IC
 커맨드모드와 편집모드로 나뉘어져있다.
 
 #### 커맨드 모드
-`ESC` : 편집모드 > 커맨드모드 전환 (셀수정하도록)
+`ESC` : 편집모드 > 커맨드모드 전환 (셀수정하도록)<br />
 `Enter` : 커맨드모드 > 편집모드 전환 (코드 수정하도록)
 
 `Shift`+`Enter` : 셀 실행, 아래 셀 선택<br />
