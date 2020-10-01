@@ -1,13 +1,13 @@
 # 악튜러스님 강의 주피터 사용법 학습하기 
 
 
-
+### #01 설치 파트
 [악튜러스님 강의 #01(Install)](https://www.youtube.com/watch?v=6WcNabw7sQg&list=PL73qGQ0nG_q3qI1KNAdGb2ILhm8UXb4CH&index=4)
-
-[악튜러스님 강의 #02(단축키)](https://www.youtube.com/watch?v=_whbI6r2Gj4&list=PL73qGQ0nG_q3qI1KNAdGb2ILhm8UXb4CH&index=5)
 
 
 ### #02 단축키 파트
+[악튜러스님 강의 #02(단축키)](https://www.youtube.com/watch?v=_whbI6r2Gj4&list=PL73qGQ0nG_q3qI1KNAdGb2ILhm8UXb4CH&index=5)
+
 커맨드모드와 편집모드로 나뉘어져있다.
 
 #### 커맨드 모드
@@ -31,13 +31,13 @@
 `Ctrl` + `Enter` : 셀 실행(삽입없음)<br />
 `Tab`: indent<br />
 
-
+#03 커널메뉴 파트
 [악튜러스님 강의 #03(커널메뉴)](https://www.youtube.com/watch?v=Wf8uaassOn8&list=PL73qGQ0nG_q3qI1KNAdGb2ILhm8UXb4CH&index=8)
 
 커널 메뉴 : 실행중인 셀에 인터럽트 걸거나 재시작 처리<br />
 파일 메뉴 : 노트북을 저장하거나 불러오거나, PDF, HTML, Latex등으로 Export 할 수 있다.<br />
 
-
+#04 Magic명령어 파트
 [악튜러스님 강의 #04(magic명령어)](https://www.youtube.com/watch?v=x-XmjsMu8SU&list=PL73qGQ0nG_q3qI1KNAdGb2ILhm8UXb4CH&index=6)
 
 실행시간이나, 메모리소요량등을 확인해볼 수 있다.<br />
@@ -88,7 +88,7 @@ data.pie()
  
  * colab : 구글에서 만든 노트북 실행환경, %%bash등을 실행해서 테스트 해볼 수 있음.
  
- 
+#05 MD작성 및 Docstring 파트
 [악튜러스님 강의 #05(Markdown 작성법 및 Docstring 확인법)](https://www.youtube.com/watch?v=JodL6144BCk&list=PL73qGQ0nG_q3qI1KNAdGb2ILhm8UXb4CH&index=7)
 
 ```
