@@ -1,0 +1,22 @@
+FROM mcr.microsoft.com/dotnet/framework/runtime:4.8
+
+COPY Setup-Subversion-1.8.17.msi .
+
+RUN msiexec /i c:\Setup-Subversion-1.8.17.msi /quiet /qn /norestart /log c:\install.log \
+    && mkdir /src
+
+
+# RUN mkdir /src
+WORKDIR /src
+# http://sever-ip:8080/svn/JS_FRONTEND/ --username USERID --password PASSWORD
+#  
+# $Env:windir
+# $Env:APPDATA
+# https://sourceforge.net/projects/win32svn/
+# Invoke-WebRequest https://github.com/vim/vim-win32-installer/releases/download/v8.2.3231/gvim_8.2.3231_x64_signed.zip -OutFile vim.zip
+# [Environment]::SetEnvironmentVariable(
+#    "Path",
+#    [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\tools\vim\vim82",
+#    [EnvironmentVariableTarget]::Machine)
+# $profile
+# New-Alias vi vim
