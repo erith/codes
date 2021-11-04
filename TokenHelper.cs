@@ -7,6 +7,13 @@ using System.Text;
 
 namespace TokenHelpers
 {
+    public enum JwtHashAlgorithm
+    {
+        HS256,
+        HS384,
+        HS512
+    }
+    
     public class JsonWebToken
     {
         private static Dictionary<JwtHashAlgorithm, Func<byte[], byte[], byte[]>> HashAlgorithms;
