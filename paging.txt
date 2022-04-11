@@ -1,0 +1,94 @@
+import _ from "lodash";
+
+export type row = {
+  SEQ: number;
+  CUSTOMER_TYPE: string;
+  SALES_TYPE: string;
+  GOODS_TYPE: string;
+  CUSTOMER_SEQ: number;
+};
+
+const itemCount = 3000;
+const items = new Array<row>();
+
+class PagingHelper<T> {
+  groupItems?: { Key: string; Items: T[] }[];
+  index: number = 0;
+  totalPage: number = 0;
+
+  public First = () => {
+    this.index = 0;
+  };
+
+  public Last = () => {
+    this.index = this.totalPage - 1;
+  };
+
+  public Prev = (): boolean => {
+    if (this.index <= 0) {
+      return false;
+    }
+    this.index = this.index - 1;
+    return true;
+  };
+
+  public Next = (): boolean => {
+    if (this.totalPage > this.index + 1) {
+      return false;
+    }
+    this.index = this.index + 1;
+    return true;
+  };
+
+  public EnableFirst = (): boolean => {
+    if (this.index == 0) return false;
+    return true;
+  };
+
+  public EnableLast = (): boolean => {
+    if (this.totalPage > this.index + 1) {
+      return false;
+    }
+    return true;
+  };
+
+  public EnableNext = (): boolean => {
+    if (this.totalPage > this.index + 1) {
+      return false;
+    }
+    return true;
+  };
+
+  public EnablePrev = (): boolean => {
+    if (this.index <= 0) {
+      return false;
+    }
+    return true;
+  };
+
+  public KeyByValues = (key: string): T[] => {
+    return this.groupItems?.find((v) => v.Key === key)?.Items ?? [];
+  };
+
+  public Keys = (): string[] => {
+    console.log(this.groupItems);
+    return this.groupItems?.map((v) => v.Key) ?? [];
+  };
+
+  public SetItems(items: T[], keyName: string): void {
+    this.groupItems = _.chain(items)
+      .groupBy(keyName)
+      .map((v, k) => ({ Key: k, Items: v }))
+      .value();
+    this.totalPage = this.Keys().length;
+    this.index = 0;
+  }
+}
+
+
+---
+const paging = new PagingHelper<row>();
+  paging.SetItems(data.rows, "GOODS_TYPE");
+  const keys = paging.Keys();
+  const idx = 3;
+  const items = paging.KeyByValues(keys[idx]);
