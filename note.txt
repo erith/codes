@@ -1,0 +1,15 @@
+    app.MapWhen(ctx => ctx.Request.Path.StartsWithSegments("/mapg"), subApp =>
+    {
+        subApp.UseSpa(spa =>
+        {
+            spa.Options.SourcePath = "ClientApp";
+            spa.Options.DefaultPageStaticFileOptions = new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "ClientApp"))
+            };
+
+            //if (_env.IsDevelopment())
+            //spa.UseProxyToSpaDevelopmentServer("http://localhost:3000");
+        });
+    });
