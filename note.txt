@@ -1,10 +1,31 @@
     app.MapWhen(ctx => ctx.Request.Path.StartsWithSegments("/mapg"), subApp =>
     {
+
+        var provider = new FileExtensionContentTypeProvider();
+        provider.Mappings[".js"] = "text/javascript";
+        provider.Mappings[".json"] = "application/json";
+        provider.Mappings[".svg"] = "image/svg+xml";
+        provider.Mappings[".html"] = "text/html";
+        provider.Mappings[".css"] = "text/css";
+
+
+        subApp.UseStaticFiles(new StaticFileOptions()
+        {
+            FileProvider = new PhysicalFileProvider(
+            Path.Combine(Directory.GetCurrentDirectory(), @"ClientApp")),
+            RequestPath = new PathString("/mapg"),
+            ContentTypeProvider = provider
+        });
+
+
         subApp.UseSpa(spa =>
         {
             spa.Options.SourcePath = "ClientApp";
+            spa.Options.DefaultPage = "/mapg/index.html";
             spa.Options.DefaultPageStaticFileOptions = new StaticFileOptions
             {
+
+                RequestPath = new PathString("/mapg"),
                 FileProvider = new PhysicalFileProvider(
                     Path.Combine(Directory.GetCurrentDirectory(), "ClientApp"))
             };
@@ -12,4 +33,5 @@
             //if (_env.IsDevelopment())
             //spa.UseProxyToSpaDevelopmentServer("http://localhost:3000");
         });
+
     });
