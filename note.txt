@@ -35,3 +35,48 @@
         });
 
     });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+/**
+ * 클래스 생성자의 파라미터 타입 무시하고 그냥 생성하기.
+ */
+
+type ConstructorType<T> = { new(...args: any[]): T }
+
+const createInstnace = <T>(classToCreate: ConstructorType<T>) => {
+  return new classToCreate()
+}
+
+
+/**
+ * 클래스 생성자의 파라미터 타입도 포함하기
+ */
+
+export interface ConstructorTypeWithArgs<T, A extends any[]> extends Function { new(...args: A): T; } 
+
+const createInstnaceWithArgs = <T, A extends any[]>(classToCreate: ConstructorTypeWithArgs<T, A>, constructorArgs: A) => {
+  return new classToCreate(...constructorArgs);
+}
+
+/**
+ * 테스트해보기
+ */
+
+class Foo {
+  private c: boolean
+  constructor(public a: string, b: number) {
+    this.c = !b
+  }
+}
+
+const foo1: Foo = createInstnace(Foo);
+const foo2: Foo = createInstnaceWithArgs(Foo, ['ddd', 2342]);
+
