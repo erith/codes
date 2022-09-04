@@ -1,0 +1,16 @@
+# docker pull mcr.microsoft.com/dotnet/sdk:6.0.400-1-focal-amd64
+FROM mcr.microsoft.com/dotnet/sdk:6.0.400-1-focal-amd64 as build
+
+# xz util install & node extract.
+RUN apt-get update && apt-get install -y xz-utils
+ADD node-v16.17.0-linux-x64.tar.xz /node
+
+# Add Path to Env
+ENV PATH="${PATH}:/node/node-v16.17.0-linux-x64/bin"
+
+# 빌드
+# docker build -t docker.io/erith/node-dotnet6 .
+# docker build -t node-dotnet .
+
+# test 실행
+# docker run -it  node-dotnet /bin/sh 
