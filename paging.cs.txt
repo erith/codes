@@ -1,0 +1,148 @@
+namespace BlazorApp2.Client.Library
+{
+
+    public class Paging
+    {
+        public long TotalRows;
+        public long List;
+        public long PageBlock;
+        public long TotalPage;
+        public long CurrentPage;
+        public long StartRow; // 0 is start
+        public long EndRow;
+        public long BlockStart;
+        public long BlockEnd;
+        public long BlockFirst;
+        public long BlockLast;
+        public long BlockPrev;
+        public long BlockNext;
+        public string? QueryString;
+
+        /// <summary>
+        /// 생성자
+        /// </summary>
+        /// <param name="TotalRows"></param>
+        /// <param name="List"></param>
+        /// <param name="PageBlock"></param>
+        /// <param name="CurrentPage"></param>
+        public Paging(long TotalRows, long List = 10, long PageBlock = 5, long CurrentPage = 1)
+        {
+            this.TotalRows = TotalRows;
+            this.List = List;
+            this.PageBlock = PageBlock;
+            this.TotalPage = (TotalRows < 1) ? 1 : Convert.ToInt32(Math.Ceiling((float)TotalRows / (float)List));
+            this.SetPage(CurrentPage);
+        }
+
+        public void SetPage(long CurrentPage)
+        {
+            this.CurrentPage = CurrentPage;
+            this.StartRow = (this.CurrentPage - 1) * this.List;
+            this.EndRow = (TotalRows < this.CurrentPage * List) ? TotalRows : this.CurrentPage * List;
+            this.BlockStart = (this.TotalRows < 1)
+                              ? 1
+                              : (this.CurrentPage < this.PageBlock)
+                              ? 1
+                              : Convert.ToInt32(((Math.Floor((float)(this.CurrentPage - 1) / (float)this.PageBlock)) * this.PageBlock) + 1);
+
+
+            this.BlockEnd = (this.TotalRows < 1)
+                            ? 1
+                            : Convert.ToInt32(Math.Ceiling((float)this.CurrentPage / (float)this.PageBlock) * this.PageBlock);
+            this.BlockEnd = (this.BlockEnd < this.TotalPage)
+                            ? this.BlockEnd
+                            : this.TotalPage;
+
+            this.BlockFirst = 1;
+            this.BlockLast = this.TotalPage;
+            this.BlockPrev = ((BlockStart - PageBlock) <= 1) ? 1 : BlockStart - PageBlock;
+            this.BlockNext = (BlockEnd >= TotalPage) ? TotalPage : BlockEnd + 1;
+        }
+
+        public bool EnableFirst()
+        {
+            return this.CurrentPage != 1;
+        }
+
+        public bool EnableLast()
+        {
+            return this.CurrentPage != TotalPage;
+        }
+
+        public bool EnablePrev()
+        {
+            return this.BlockPrev != 1;
+        }
+
+        public bool EnableNext()
+        {
+            return this.BlockNext != TotalPage;
+        }
+    }
+}
+
+---
+@using BlazorApp2.Client.Library;
+
+<style>
+    .active {
+        background-color:red;
+    }
+</style>
+
+@if (paging != null)
+{
+    <span @onclick="()=> OnMove?.Invoke(1)">처음</span>
+    <span @onclick="()=> OnMove?.Invoke(paging.BlockPrev)">이전</span>
+    @for (var i = paging.BlockStart; i <= paging.BlockEnd; i++)
+    {
+        var active = paging.CurrentPage == i ? "active" : "";
+        var j = i;
+        
+        <span style="border: 1px solid #ccc" class="@(active)" @onclick=@(() => OnMove?.Invoke(j))>@(j)</span>
+    }
+    <span @onclick="()=> OnMove?.Invoke(paging.BlockNext)">다음</span>
+    <span @onclick="()=> OnMove?.Invoke(paging.BlockLast)">마지막</span>
+}
+
+
+@code {
+    [Parameter]
+    public int CurrentPage { get; set; } = 1;
+
+    [Parameter]
+    public Action<long>? OnMove { get; set; }
+
+    [Parameter]
+    public int TotalCount { get; set; } = 0;
+
+    Paging? paging { get; set; } = null;
+
+    protected override void OnParametersSet()
+    {
+        paging = new Paging(TotalCount);
+        paging.SetPage(CurrentPage);
+        base.OnParametersSet();
+    }
+
+}
+
+
+---
+@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<Pager TotalCount="235" CurrentPage="page" OnMove="(v)=> { 
+page = (int)v; 
+Console.WriteLine(page.ToString());
+StateHasChanged(); }"></Pager>
+
+@code {
+
+    public int page { get; set; } = 1;
+}
