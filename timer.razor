@@ -1,0 +1,25 @@
+@code {
+    Timer? timer;
+
+    private async Task click()
+    {
+        timer?.Change(1000 * 60 * 60 * 24, 1000 * 60 * 60 * 24);
+        await JS.InvokeVoidAsync("alert", "test");
+        timer?.Change(0, 1000);
+    }
+
+    public int Count { get; set; } = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        timer = new Timer(async (object? state) =>
+        {
+            Count++;
+            StateHasChanged();
+        }, new System.Threading.AutoResetEvent(false), 0, 2000);
+
+        await base.OnInitializedAsync();
+    }
+
+    public int page { get; set; } = 1;
+}
