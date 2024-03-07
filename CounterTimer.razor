@@ -1,0 +1,83 @@
+@page "/counter"
+@rendermode InteractiveServer
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+<p role="status">Current count: @currentCount1</p>
+<button class="btn btn-primary" @onmouseover="()=> {
+ReserveAction(()=> { ShowDialog(); });
+}" @onmouseout="()=> {
+CancelReservedAction(()=> { HideDialog(); });
+}">Click me</button>
+
+<button class="btn btn-primary" @onmouseover="()=> {
+ReserveAction(()=> { ShowDialog2(); });
+}" @onmouseout="()=> {
+CancelReservedAction(()=> { HideDialog2(); });
+}">
+    Click me2
+</button>
+@code {
+    private int currentCount = 0;
+    private int currentCount1 = 0;
+
+    Timer? timer = null;
+
+    /// <summary>
+    /// 예약된 Action을 취소한다.
+    /// </summary>
+    /// <param name="act"></param>
+    private void CancelReservedAction(Action act)
+    {
+        act?.Invoke();
+        timer?.Dispose();
+    }
+
+    private void ShowDialog()
+    {
+        currentCount = 1;
+        InvokeAsync(() => StateHasChanged());
+    }
+
+    private void ShowDialog2()
+    {
+        currentCount1 = 1;
+        InvokeAsync(() => StateHasChanged());
+    }
+
+    private void HideDialog()
+    {
+        currentCount = 0;
+        InvokeAsync(() => StateHasChanged());
+    }
+
+    private void HideDialog2()
+    {
+        currentCount1 = 0;
+        InvokeAsync(() => StateHasChanged());
+    }
+
+    /// <summary>
+    /// Action을 예약한다.
+    /// </summary>
+    /// <param name="act"></param>
+    private void ReserveAction(Action act)
+    {
+        if (timer != null)
+            timer.Dispose();
+        timer = new Timer(new TimerCallback(DoAction!), act, 300, 10);
+    }
+
+    /// <summary>
+    /// 인자로 설정된 Action을 실행한다.
+    /// </summary>
+    /// <param name="state"></param>
+    private void DoAction(object state)
+    {
+        ((Action)state).Invoke();
+        timer?.Dispose();
+    }
+}
