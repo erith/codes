@@ -1,0 +1,16 @@
+version: '3.4'
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.3.2.23
+    container_name: clickhouse
+    ports:
+      - 9900:9000
+      - 8123:8123
+    volumes:
+      - './ch_data:/var/lib/clickhouse' #/var/lib/clickhouse/user_files/
+      - './ch_logs:/var/log/clickhouse-server'
+    environment:
+      CLICKHOUSE_DB: test
+      CLICKHOUSE_USER: test
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1      
+      CLICKHOUSE_PASSWORD: test1234
