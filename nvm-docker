@@ -1,0 +1,29 @@
+FROM ubuntu:24.04
+
+RUN apt-get update && apt-get install -y curl tar
+
+# nvm.tar.gz 복사
+COPY nvm.tar.gz /tmp/nvm.tar.gz
+
+# git 활용시.
+# export NVM_DIR="$HOME/.nvm" && (
+#  git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
+#  cd "$NVM_DIR"
+#  git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
+# ) && \. "$NVM_DIR/nvm.sh"
+
+# 압축 해제 및 이동
+RUN tar -xzf /tmp/nvm.tar.gz -C /root --strip-components=1 && \
+    rm /tmp/nvm.tar.gz
+
+# .profile에 NVM 환경설정 추가
+RUN echo 'export NVM_DIR="$HOME/.nvm"' >> /root/.bashrc && \
+    echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> /root/.bashrc && \
+    echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> /root/.bashrc 
+    
+# CMD ["bash"]    
+
+# ENV NVM_NODEJS_ORG_MIRROR=https://nodejs.org/dist/
+
+# docker build -t gitea.ozstack.net/node:0.1 .
+# docker run  --rm -it gitea.ozstack.net/node:0.1 /bin/bash
